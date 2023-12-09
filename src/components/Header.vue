@@ -1,8 +1,9 @@
 <template>
     <header class="flex justify-between items-center bg-gray-200 text-white p-4">
+
         <div class="text-black font-bold">You are in: {{ currentRoute }}</div>
         <div class="relative">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            <button class="bg-primary-500 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded"
         @click="open = !open"
         >
             User

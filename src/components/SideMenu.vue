@@ -3,7 +3,7 @@
       id="dddddd"
       v-model:openKeys="openKeys"
       v-model:selectedKeys="selectedKeys"
-      class="mr-6 h-[96%] w-64 rounded-50 bg-gray-100 p-3"
+      class="mr-6 h-[96%] w-64 rounded-50 bg-gray-200 font-medium p-3"
       style="border-radius: 16px;"
       mode="inline"
       :items="items"

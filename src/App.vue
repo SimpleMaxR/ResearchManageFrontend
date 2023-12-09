@@ -2,22 +2,12 @@
 </script>
 
 <template>
-  <RouterView />
+    <a-config-provider
+    :theme="{ token: { colorPrimary: `#8CC7A1`, borderRadius: `16px` } }"
+  >
+  </a-config-provider>
+  <RouterView class="font-normal" />
 </template>
 
 <style>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>

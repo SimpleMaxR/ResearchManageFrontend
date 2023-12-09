@@ -10,6 +10,7 @@
                 style="border-radius: 16px;"
             >
                 <RouterView />
+                <!-- <LabQuickView></LabQuickView> -->
             </div>
         </div>
     </div>
@@ -19,6 +20,7 @@
 import SideMenu from "../components/SideMenu.vue";
 import Header from "../components/Header.vue";
 import { ref, defineProps, onMounted } from 'vue'
+import LabQuickView from "../components/LabQuickView.vue";
 
 const props = defineProps(['user'])
 const user = ref({})

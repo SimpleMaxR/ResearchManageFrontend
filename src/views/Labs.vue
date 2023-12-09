@@ -1,4 +1,5 @@
 <template>
+
   <div class="container">
     <h1 class="text-2xl font-bold mb-4">Lab Management</h1>
     <div class="flex justify-between items-center mb-4">
@@ -9,7 +10,7 @@
         placeholder="Search Labs"
       />
       <button
-        class="bg-blue-500 hover:bg-blue-600 text-white rounded px-4 py-2"
+        class="bg-primary-500 hover:bg-primary-600 text-white rounded px-4 py-2"
         @click="createLabModalVisible = true"
       >
         Create Lab
@@ -21,6 +22,8 @@
 
 <script setup>
 import {ref } from 'vue';
+
+const searchQuery = ref('')
 
 const columns = ref([
   {
@@ -115,6 +118,9 @@ const data = ref([
   },
 ])
 
+function createLabModalVisible() {
+  console.log('createLabModalVisible')
+}
 </script>
 
 <style>

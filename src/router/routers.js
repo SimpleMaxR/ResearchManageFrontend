@@ -13,6 +13,11 @@ const routes = createRouter({
                     path: '/Dashboard',
                     name: 'Dashboard',
                     component: () => import('../views/Labs.vue')
+                },
+                {
+                    path: '/test',
+                    name: 'Test',
+                    component: () => import('../components/LabQuickView.vue')
                 }
             ]
         },
