@@ -8,32 +8,28 @@ const request = axios.create({
 })
 
 // 请求拦截器
-request.interceptors.request.use(
-    config => {
-        const store = useMainStore()
-        if (store.token == null) {
-            return config
-        }
-        const token = store.token
-        const token_str = token.replace(/^"|"/g, '');
-        if (token) {
-            config.headers.token = token_str
-        }
-        return config
-    },
-    error => {
-        return Promise.reject(error)
-    }
-)
+// request.interceptors.request.use(
+//     config => {
+//         const store = useMainStore()
+//         if (store.token == null) {
+//             return config
+//         }
+//         const token = store.token
+//         const token_str = token.replace(/^"|"/g, '');
+//         if (token) {
+//             config.headers.token = token_str
+//         }
+//         return config
+//     },
+//     error => {
+//         return Promise.reject(error)
+//     }
+// )
 
 request.interceptors.response.use(
     response => {
         let res = response.data
-        if (res.code === 1) {
-            return res
-        } else {
-            return Promise.reject(res)
-        }
+        return res
     },
     error => {
         console.log('Error message:', error.message)

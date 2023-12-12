@@ -13,8 +13,11 @@
     "@heroicons/vue": "^2.0.18",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "ant-design-vue": "^4.0.7",
+    "axios": "^1.6.2",
+    "element-plus": "^2.4.3",
     "pinia": "^2.1.7",
     "vue": "^3.3.8",
+    "vue-request": "^2.0.4",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
