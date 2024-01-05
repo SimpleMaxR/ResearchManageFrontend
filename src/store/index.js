@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 
-export const useMainStore = defineStore("main", {
+export const MainStore = defineStore("main", {
     state: () => ({
-        isAdmin: false,
         isLogin: false,
         userName: "",
         token: "",
-        userId: ""
+        userID: 0,
+        password: "",
+        role: "0",
     }),
+    persist: true
 });

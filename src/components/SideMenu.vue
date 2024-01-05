@@ -3,18 +3,21 @@
       id="dddddd"
       v-model:openKeys="openKeys"
       v-model:selectedKeys="selectedKeys"
-      class="mr-6 h-[96%] w-64 rounded-50 bg-gray-200 font-medium p-3"
-      style="border-radius: 16px;"
-      mode="inline"
+      class=" h-[98%] w-64 bg-gray-50 font-medium p-3 mt-2" mode="inline"
       :items="items"
       @click="handleClick"
     ></a-menu>
 </template>
 <script setup>
-  import { reactive, ref, watch, h } from 'vue';
+import {reactive, ref, watch, h, onBeforeMount} from 'vue';
   import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
-  const selectedKeys = ref(['1']);
-  const openKeys = ref(['sub1']);
+  import { useRouter } from 'vue-router';
+  import { MainStore } from "../store/index.js";
+
+  const store = MainStore();
+const router = useRouter();
+  const selectedKeys = ref(['/Dashboard']);
+  const openKeys = ref(['/Dashboard']);
   function getItem(label, key, icon, children, type) {
     return {
       key,
@@ -24,31 +27,46 @@
       type,
     };
   }
-  const items = reactive([
-    getItem('Navigation One', 'sub1', () => h(MailOutlined), [
-      getItem('Item 1', 'g1', null, [getItem('Option 1', '1'), getItem('Option 2', '2')], 'group'),
-      getItem('Item 2', 'g2', null, [getItem('Option 3', '3'), getItem('Option 4', '4')], 'group'),
+  const items = ref([])
+  const items1 = ref([
+    getItem('工作台', 'Dashboard', () => h(SettingOutlined)),
+    getItem('实验室管理', 'sub1', () => h(AppstoreOutlined), [
+      getItem('实验室', 'Labs'),
+      getItem('办公室', 'Office'),
+      getItem('秘书', 'Secretary'),
+      getItem('合作方', 'Partners'),
+      getItem('质量检测方', 'QM'),
+      // getItem('查看实验室', 'g2', null, [getItem('Option 3', '3'), getItem('Option 4', '4')], 'group'),
     ]),
-    getItem('Navigation Two', 'sub2', () => h(AppstoreOutlined), [
-      getItem('Option 5', '5'),
-      getItem('Option 6', '6'),
-      getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
+    getItem('研究员', 'sub2', () => h(AppstoreOutlined), [
+      getItem('研究员管理', 'Researchers'),
+      getItem('成果管理', 'Achievements'),
     ]),
-    {
-      type: 'divider',
-    },
-    getItem('Navigation Three', 'sub4', () => h(SettingOutlined), [
-      getItem('Option 9', '9'),
-      getItem('Option 10', '10'),
-      getItem('Option 11', '11'),
-      getItem('Option 12', '12'),
-    ]),
-    getItem('Group', 'grp', null, [getItem('Option 13', '13'), getItem('Option 14', '14')], 'group'),
+    getItem('项目管理', 'Projects', () => h(AppstoreOutlined)),
+
   ]);
-  const handleClick = e => {
-    console.log('click', e);
+
+  const items2 = ref([
+  getItem('工作台', 'Dashboard'),
+  getItem('成果管理', 'Achievements'),
+  getItem('项目管理', 'Projects'),
+  getItem('实验室', 'Labs'),
+]);
+  const handleClick = selected => {
+    router.push({
+      name: selected.key,
+    })
   };
+
   watch(openKeys, val => {
     console.log('openKeys', val);
+  });
+
+  onBeforeMount(() => {
+    if (store.role == 0) {
+      items.value = items1.value
+    } else {
+      items.value = items2.value
+    }
   });
   </script>

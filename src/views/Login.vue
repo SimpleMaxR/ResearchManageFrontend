@@ -1,37 +1,75 @@
-<template>  
-    <!-- component -->
-<div class="mx-auto my-36 flex h-[300px] w-[350px] flex-col border-2 bg-white text-black shadow-xl">
-  <div class="mx-8 mt-7 mb-1 flex flex-row justify-start space-x-2">
-    <div class="h-7 w-3 bg-[#0DE6AC]"></div>
-    <div class="w-3 text-center font-sans text-xl font-bold">Login</div>
-  </div>
-  <div class="flex flex-col items-center">
-    <input class="my-2 w-72 border p-2 focus:border-fuchsia-300" type="email" placeholder="Username" />
-    <input class="my-2 w-72 border p-2" type="password" placeholder="Password" />
-  </div>
-  <div class="my-2 flex justify-center">
-    <button class="w-72 border bg-[#0DE6AC] p-2 font-sans" @click="login()">Login</button>
-  </div>
-  <div class="mx-10 my-3 flex justify-between text-sm font-semibold">
-    <div>Forget Password</div>
-    <div class="underline underline-offset-2">Signup</div>
-  </div>
-</div>
-</template>
 <script setup>
-import { useMainStore } from "../store/index.js";
-import { useRouter } from "vue-router";
-import { getCurrentInstance } from "vue";
+import {watch, ref} from "vue";
+import service from "../utils/request.js";
+import {MainStore} from "../store/index.js";
+import {useRouter} from "vue-router";
+import api from "../utils/api.js";
 
-const instance = getCurrentInstance();
-const store = useMainStore();
 const router = useRouter();
+const username = ref('')
+const password = ref('')
 
-function login() {
-    console.log('login')
-    localStorage.setItem("token", "123");
-    store.token = '123' // 模拟登录成功
-    // router.push({ path: '/' })
-    instance.proxy.$router.push("/")
+function handleLogin() {
+  const store = MainStore()
+  service.post(api.login, {
+    username: username.value,
+    password: password.value
+  }).then((res) => {
+      store.username = username.value
+      store.password = password.value
+      store.userid = res.data.userid
+      store.token = res.data.token
+      store.role = res.data.role
+      store.isLogin = true
+      router.push('/')
+  })
 }
+
 </script>
+
+<template>
+  <!-- component -->
+  <section class="flex flex-col md:flex-row h-screen items-center">
+
+    <div class="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
+      <img src="https://source.unsplash.com/1290x720/?acadamy" class="w-full h-full object-cover">
+    </div>
+
+    <div class="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
+        flex items-center justify-center">
+
+      <div class="w-full h-100">
+
+
+        <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">使用分配的账户登录</h1>
+
+        <div class="mt-6">
+          <div>
+            <label class="block text-gray-700">登录用户名</label>
+            <input v-model="username" type="name" placeholder="" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" autofocus autocomplete required>
+          </div>
+
+          <div class="mt-4">
+            <label class="block text-gray-700">密码</label>
+            <input v-model="password" type="password" placeholder="" minlength="6" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500
+                focus:bg-white focus:outline-none" required>
+          </div>
+
+          <!--          <div class="text-right mt-2">-->
+          <!--            <a href="#" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>-->
+          <!--          </div>-->
+
+          <button @click="handleLogin" type="submit" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg
+              px-4 py-3 mt-6">登录系统</button>
+        </div>
+
+
+      </div>
+    </div>
+
+  </section>
+</template>
+
+<style scoped>
+
+</style>
